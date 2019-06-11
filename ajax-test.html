@@ -10,13 +10,19 @@
 
 </body>
 <script>
-    
+
     let bt = document.getElementById('bt');
     bt.onclick = function () {
-        // 初始化XML对象
-        let xmlHTTP = new XMLHttpRequest();
+        let xmlHTTP;
+        // 兼容低版本IE浏览器
+        if(window.XMLHttpRequest){
+            // 初始化XML对象
+            xmlHTTP = new XMLHttpRequest();
+        }else {
+            xmlHTTP = new ActiveXObject('Microsoft.XMLHTTP')
+        }
         // 设置请求方式和地址
-        xmlHTTP.open('GET', 'ajax-test.php', true);
+        xmlHTTP.open('GET', 'ajax-test.php?t='+Math.random(), true);
         // 发送请求
         xmlHTTP.send();
         // 监听状态 (onreadystatechange)
@@ -26,6 +32,9 @@
                 if(xmlHTTP.status >= 200 && xmlHTTP.status < 300 || xmlHTTP.status === 304){
                     // 成功
                     console.log('请求成功');
+                    // 以字符串形式接受响应
+                    alert(xmlHTTP.responseText)
+
                 }else {
                     // 失败
                     console.log('请求失败')

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax</title>
+</head>
+<body>
+
+<button id="bt" name="bt" type="submit">提交</button>
+
+</body>
+<script>
+    
+    let bt = document.getElementById('bt');
+    bt.onclick = function () {
+        // 初始化XML对象
+        let xmlHTTP = new XMLHttpRequest();
+        // 设置请求方式和地址
+        xmlHTTP.open('GET', 'ajax-test.php', true);
+        // 发送请求
+        xmlHTTP.send();
+        // 监听状态 (onreadystatechange)
+        xmlHTTP.onreadystatechange = function () {
+            // 判断请求状态 大于等于200且小于300或等于304都是成功
+            if(xmlHTTP.readyState === 4){
+                if(xmlHTTP.status >= 200 && xmlHTTP.status < 300 || xmlHTTP.status === 304){
+                    // 成功
+                    console.log('请求成功');
+                }else {
+                    // 失败
+                    console.log('请求失败')
+                }
+            }
+        }
+    }
+
+</script>
+</html>
